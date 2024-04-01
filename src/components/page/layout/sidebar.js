@@ -107,6 +107,13 @@ const ExampleSidebar = function () {
         dispatch(setBasketAmount(''));
         dispatch(setBasketName(''));
         break;
+      case 10:
+        router.push('/admin/kyc');
+        dispatch(setBasketState(false));
+        setIsLinkDisabled(false);
+        dispatch(setBasketAmount(''));
+        dispatch(setBasketName(''));
+        break;
       default:
         return null
     }
@@ -330,17 +337,17 @@ const ExampleSidebar = function () {
                     : ( <Link href="/admin/bod-eod">BOD/ EOD Ops</Link> )
                   }
                 </Sidebar.Item>
-                {/* <Sidebar.Item
+                <Sidebar.Item
                   icon={AiFillSetting}
                   className={
-                    "/admin/settings" === pathname ? "bg-gray-200 dark:bg-gray-700" : ""
+                    "/admin/kyc" === pathname ? "bg-gray-200 dark:bg-gray-700" : ""
                   }
                 >
                   {isLinkDisabled 
-                    ? ( <button onClick={() => {setOpen(true); setTab(10);}}>Settings</button> ) 
-                    : ( <Link href="/admin/settings">Settings</Link> )
+                    ? ( <button onClick={() => {setOpen(true); setTab(10);}}>KYC</button> ) 
+                    : ( <Link href="/admin/kyc">KYC</Link> )
                   }
-                </Sidebar.Item> */}
+                </Sidebar.Item>
               </Sidebar.ItemGroup>
             </Sidebar.Items>
           </div>
