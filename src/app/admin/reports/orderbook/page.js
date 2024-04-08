@@ -82,8 +82,6 @@ const OrderBook = () => {
         broker
       )
 
-      console.log(data)
-
       if (data?.messages) {
         dispatch(setMessage(data.messages));
         return;
