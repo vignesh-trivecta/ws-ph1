@@ -1,0 +1,102 @@
+"use client"
+
+import { modifyOrder } from "@/app/api/reports/route";
+import { setNewBasketName, setUpdatedPrice } from "@/store/modifyOrderSlice";
+import { Button, Label, Modal, TextInput, Tooltip } from "flowbite-react";
+import { useDispatch, useSelector } from "react-redux";
+
+export default function ModifyOrder({onCloseModal}) {
+
+    const customerId = useSelector((state) => state.report.customerId);
+    const broker = useSelector((state) => state.report.broker);
+
+    const openModal = useSelector((state) => state.modifyOrder.openModal);
+    const orderId = useSelector((state) => state.modifyOrder.orderId);
+    const exchange = useSelector((state) => state.modifyOrder.exchange);
+    const transType = useSelector((state) => state.modifyOrder.transType); // buy or sell
+    const script = useSelector((state) => state.modifyOrder.script);
+    const quantity = useSelector((state) => state.modifyOrder.quantity);
+    const price = useSelector((state) => state.modifyOrder.price);
+    const updatedPrice = useSelector((state) => state.modifyOrder.updatedPrice);
+    const newBasketName = useSelector((state) => state.modifyOrder.newBasketName);
+
+    const dispatch = useDispatch();
+
+  return (
+    <>
+      {/* <Button onClick={() => setOpenModal(true)}>Toggle modal</Button> */}
+      <Modal show={openModal} size="md" onClose={onCloseModal} popup>
+        <Modal.Header />
+        <Modal.Body>
+            <div className="space-y-4">
+                <p><span className="font-bold underline">Order ID:</span> {orderId}</p>
+                <div className="flex gap-4">
+                    <div>
+                        <Label className="font-semibold">Script:</Label>
+                        <Tooltip content={script}>
+                            <TextInput 
+                                value={script}
+                                className="font-bold"
+                                disabled
+                                />
+                        </Tooltip>
+                    </div>
+                    <div>
+                        <Label className="font-semibold">Exchange:</Label>
+                        <TextInput 
+                            value={exchange}
+                            className="font-bold"
+                            disabled
+                            />
+                    </div>
+                    <div>
+                        <Label className="font-semibold">Buy/ Sell:</Label>
+                        <TextInput 
+                            value={transType}
+                            className="font-bold"
+                            disabled
+                            />
+                    </div>
+                    <div>
+                        <Label className="font-semibold">Old Price:</Label>
+                        <TextInput 
+                            value={price}
+                            className="font-bold"
+                            disabled
+                        />
+                    </div>
+                </div>
+                <div className="flex gap-4">
+                    <div>
+                        <Label className="font-semibold">New Basket Name:</Label>
+                        <TextInput 
+                            value={newBasketName}
+                            onChange={(e) => {
+                                dispatch(setNewBasketName(e.target.value))
+                            }}
+                            className=""
+                            autoFocus
+                        /> 
+                        <p>{''}</p>
+                    </div>
+                    <div> 
+                        <Label className="font-semibold">New Price:</Label>
+                        <TextInput 
+                            type="number"
+                            onChange={(e) => {dispatch(setUpdatedPrice(e.target.value))}}
+                            className=""
+                        />
+                    </div>
+                </div>
+                <div className="flex justify-center gap-4">
+                    <Button 
+                        onClick={() => modifyOrder(customerId,broker, orderId, exchange, transType, script, updatedPrice, newBasketName)}
+                    >Modify & Send</Button>
+                    <Button color='gray' onClick={onCloseModal}>Cancel</Button>
+                </div>
+            </div>
+        </Modal.Body>
+      </Modal>
+    </>
+  );
+}
