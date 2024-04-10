@@ -10,6 +10,7 @@ import clientBasketSlice from "./clientBasketSlice";
 import addRecordSlice from "./addRecordSlice";
 import updateRecordSlice from "./updateRecordSlice";
 import reportSlice from "./reportSlice";
+import modifyOrderSlice from "./modifyOrderSlice";
 
 // combinig all the slices to a reducer
 const reducers = combineReducers({
@@ -20,6 +21,7 @@ const reducers = combineReducers({
     update: updateRecordSlice,
     client: clientBasketSlice,
     report: reportSlice,
+    modifyOrder: modifyOrderSlice,
 });
 
 // configuration for persiting data
