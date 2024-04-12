@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 import { setBasketAmount, setBasketName } from "@/store/basketSlice";
 import { usePathname, useSearchParams } from 'next/navigation';
 import { setBasketState } from "@/store/eventSlice";
-import { BsChatRightTextFill } from "react-icons/bs";
+import { CiMoneyCheck1 } from "react-icons/ci";
 import { TbMessage2 } from "react-icons/tb";
 
 const ExampleSidebar = function () {
@@ -109,6 +109,20 @@ const ExampleSidebar = function () {
         break;
       case 10:
         router.push('/admin/kyc');
+        dispatch(setBasketState(false));
+        setIsLinkDisabled(false);
+        dispatch(setBasketAmount(''));
+        dispatch(setBasketName(''));
+        break;
+      case 10:
+        router.push('/admin/investwell/customer');
+        dispatch(setBasketState(false));
+        setIsLinkDisabled(false);
+        dispatch(setBasketAmount(''));
+        dispatch(setBasketName(''));
+        break;
+      case 10:
+        router.push('/investwell/operational');
         dispatch(setBasketState(false));
         setIsLinkDisabled(false);
         dispatch(setBasketAmount(''));
@@ -348,6 +362,37 @@ const ExampleSidebar = function () {
                     : ( <Link href="/admin/kyc">KYC</Link> )
                   }
                 </Sidebar.Item>
+                <Sidebar.Collapse
+                  icon={CiMoneyCheck1}
+                  label="InvestWell"
+                >
+                  <Sidebar.Item 
+                      icon={AiOutlineUserAdd}
+                      className={
+                        "/admin/investwell/customer" === pathname
+                          ? "bg-gray-200 dark:bg-gray-700"
+                          : ""
+                      }
+                  >
+                    {isLinkDisabled 
+                      ? ( <button onClick={() => {setOpen(true); setTab(9);}}>Customer</button> ) 
+                      : ( <Link href="/admin/investwell/customer">Customer</Link> )
+                    }
+                  </Sidebar.Item>
+                  <Sidebar.Item 
+                      icon={SlBasket}
+                      className={
+                        "/admin/investwell/operational" === pathname
+                          ? "bg-gray-200 dark:bg-gray-700"
+                          : ""
+                      }
+                  >
+                    {isLinkDisabled 
+                      ? ( <button onClick={() => {setOpen(true); setTab(10);}}>Operatinal</button> ) 
+                      : ( <Link href="/admin/investwell/operational">Operational</Link> )
+                    }
+                  </Sidebar.Item>
+                </Sidebar.Collapse>
               </Sidebar.ItemGroup>
             </Sidebar.Items>
           </div>
