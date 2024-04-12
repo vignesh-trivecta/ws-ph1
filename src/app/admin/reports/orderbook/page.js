@@ -62,6 +62,11 @@ const OrderBook = () => {
         broker
       );
 
+      if (data?.messages) {
+        dispatch(setMessage(data.messages));
+        return;
+      }
+      
       const { mainDatas, tooltipDatas} = orderDataParser(data.orderbook);
       setTableData(mainDatas);
       setTooltipData(tooltipDatas);
@@ -76,6 +81,11 @@ const OrderBook = () => {
         endDate,
         broker
       )
+
+      if (data?.messages) {
+        dispatch(setMessage(data.messages));
+        return;
+      }
       
       const { mainDatas, tooltipDatas} = orderDataParser(data);
       setTableData(mainDatas);

@@ -37,6 +37,7 @@ const PlaceOrder = () => {
         setStatus(true);
       }
       else {
+        setError(data?.messages);
         setSpinner(false);
         setStatus(false);
       }
@@ -57,6 +58,7 @@ const PlaceOrder = () => {
       setStatus(true);
     }
     else {
+      setError(data?.messages);
       setSpinner(false);
       setStatus(false);
     }
@@ -152,8 +154,8 @@ const PlaceOrder = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
               </svg>
               <p className="text-lg text-center text-red-700">An error occured!</p>
-              <p className="text-lg text-center text-red-700">Order placement failed!</p>
-              <p className="text-lg text-center">Please try after some time.</p>
+              <p className="text-lg text-center text-red-700">{error}.</p>
+              <p className="text-lg text-center">Please try after some time...</p>
           </div>
       )}
     </div>

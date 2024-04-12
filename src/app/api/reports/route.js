@@ -1,6 +1,7 @@
 import { decrypt } from "@/utils/aesDecryptor";
 import { encrypt } from "@/utils/aesEncryptor";
 import { errorLogger } from "@/utils/errorLogger";
+import axios from "axios";
 
 const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
 const PORT = process.env.NEXT_PUBLIC_CORE_COMP_PORT;
@@ -143,3 +144,40 @@ export const handleLiveReportsFetch = async (
   }
 };
 
+
+export const modifyOrder = async (customerId, broker, orderId, exchange, transType, script, updatedPrice, newBasketName ) => {
+  try {
+    const encryptedData = encrypt(
+      JSON.stringify(
+        {
+          // parameters come here
+          remoteOrderId: orderId,
+          customerId: customerId.split(" ")[0],
+          exchange: exchange,
+          transactionType: transType,
+          script: script,
+          price: parseInt(updatedPrice),
+          basketName: newBasketName,
+        }
+      )
+    );
+
+    let reqUrl, port;
+    broker === "AXIS" ? port = PORT_AXIS : port = PORT_IIFL;
+    broker === "AXIS" ? reqUrl = "/view/modify/order" : reqUrl = "/";
+
+    if(broker == "AXIS") {
+      // AXIS
+      const response = await axios.post(`http://${DOMAIN}:${port}/${reqUrl}`, encryptedData );
+      const status = response.status;
+
+      const jsonData = await response.json();
+      const data = decrypt(jsonData.payload);
+    } else {
+      // IIFL
+    }
+
+  } catch (error) {
+    errorLogger(error);
+  }
+}

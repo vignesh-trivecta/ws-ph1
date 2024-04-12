@@ -1,11 +1,22 @@
+"use client";
+
 import React from "react";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import stringFormatter from "@/utils/formatter/stringFormatter";
 import TableShimmer from "@/components/page/layout/tableShimmer";
+import ModifyOrder from "../crud/modifyOrder";
+import { useDispatch } from "react-redux";
+import { setExchange, setLimitPrice, setOpenModal, setOrderId, setOrderType, setPrice, setQuantity, setScript, setTransType } from "@/store/modifyOrderSlice";
 
 const OrderBookTable = ({ datas, tooltipData, shimmerLoading }) => {
+
+  const dispatch = useDispatch();
+
+  function onCloseModal() {
+    dispatch(setOpenModal(false));
+  }
 
   const renderTooltipContent = (index) => {
     return `Exchange Order Id: ${
@@ -17,6 +28,9 @@ const OrderBookTable = ({ datas, tooltipData, shimmerLoading }) => {
 
   return (
     <div className="mt-4">
+      <ModifyOrder
+        onCloseModal={onCloseModal}
+      />
       {shimmerLoading ? (
         <TableShimmer datas={datas} /> // Render your shimmer loading UI here
       ) : datas && datas?.length !== 0 ? (
@@ -71,7 +85,23 @@ const OrderBookTable = ({ datas, tooltipData, shimmerLoading }) => {
                         {index + 1}
                     </Td>
                     <Td className="p-2 pl-4 text-sm text-left ">
-                        {data.remoteOrderId}
+                        {
+                          data.orderStatus == "Pending" 
+                          ? <button onClick={() => {
+                                dispatch(setOrderId(data.remoteOrderId));
+                                dispatch(setExchange(data.exchange));
+                                dispatch(setScript(data.scripName));
+                                dispatch(setQuantity(data.quantity));
+                                dispatch(setPrice(data.rate));
+                                dispatch(setLimitPrice(data.rate));
+                                dispatch(setOrderType(data.atMarket));
+                                dispatch(setTransType(data.buyorsell));
+                                dispatch(setOpenModal(true));
+                              }} 
+                              className="underline text-red-500"
+                            >
+                            {data.remoteOrderId}</button> : data.remoteOrderId
+                        }
                     </Td>
                     <Td className="pl-4 text-sm">
                         {data.exchange}
