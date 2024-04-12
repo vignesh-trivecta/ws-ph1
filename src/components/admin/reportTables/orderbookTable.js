@@ -86,7 +86,7 @@ const OrderBookTable = ({ datas, tooltipData, shimmerLoading }) => {
                     </Td>
                     <Td className="p-2 pl-4 text-sm text-left ">
                         {
-                          data.orderStatus == "Pending" 
+                          (data.orderStatus == "Pending" || data.orderStatus == "PENDING")
                           ? <button onClick={() => {
                                 dispatch(setOrderId(data.remoteOrderId));
                                 dispatch(setExchange(data.exchange));

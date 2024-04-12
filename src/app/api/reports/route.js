@@ -164,7 +164,7 @@ export const modifyOrder = async (customerId, broker, orderId, exchange, transTy
 
     let reqUrl, port;
     broker === "AXIS" ? port = PORT_AXIS : port = PORT_IIFL;
-    broker === "AXIS" ? reqUrl = "/view/modify/order" : reqUrl = "/";
+    broker === "AXIS" ? reqUrl = "view/modify/order" : reqUrl = "/";
 
     if(broker == "AXIS") {
       // AXIS
@@ -173,11 +173,15 @@ export const modifyOrder = async (customerId, broker, orderId, exchange, transTy
 
       const jsonData = await response.json();
       const data = decrypt(jsonData.payload);
+      console.log(status, data);
+      return {status, data};
     } else {
       // IIFL
+      return {status: 500, data: "IIFL not configured"};
     }
 
   } catch (error) {
     errorLogger(error);
+    return {status: 500, data: "Error occured"};
   }
 }
