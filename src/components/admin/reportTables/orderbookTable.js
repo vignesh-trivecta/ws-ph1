@@ -26,6 +26,8 @@ const OrderBookTable = ({ datas, tooltipData, shimmerLoading }) => {
     }`;
   };
 
+  console.log(datas)
+
   return (
     <div className="mt-4">
       <ModifyOrder
@@ -86,8 +88,9 @@ const OrderBookTable = ({ datas, tooltipData, shimmerLoading }) => {
                     </Td>
                     <Td className="p-2 pl-4 text-sm text-left ">
                         {
-                          (data.orderStatus == "Pending" || data.orderStatus == "PENDING")
-                          ? <button onClick={() => {
+                          (data?.orderStatus?.toLowerCase() == "pending" || data?.orderStatus?.toLowerCase() == "rejected")
+                          ? <button 
+                              onClick={() => {
                                 dispatch(setOrderId(data.remoteOrderId));
                                 dispatch(setExchange(data.exchange));
                                 dispatch(setScript(data.scripName));
@@ -100,7 +103,9 @@ const OrderBookTable = ({ datas, tooltipData, shimmerLoading }) => {
                               }} 
                               className="underline text-red-500"
                             >
-                            {data.remoteOrderId}</button> : data.remoteOrderId
+                            {data.remoteOrderId}
+                            </button> 
+                          : data.remoteOrderId
                         }
                     </Td>
                     <Td className="pl-4 text-sm">

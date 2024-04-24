@@ -72,7 +72,7 @@ export default function ModifyOrder({onCloseModal}) {
                         <Label className="font-semibold">New Basket Name:</Label>
                         <input 
                             onChange={(e) => {
-                                dispatch(setNewBasketName(e.target.value))
+                                dispatch(setNewBasketName(e.target.value));
                             }}
                             className="w-44 h-10 border border-gray-300 rounded-lg focus:outline-blue-700 p-2"
                             maxLength={20}
@@ -94,11 +94,17 @@ export default function ModifyOrder({onCloseModal}) {
                         onClick={async () => {
                             const response = await modifyOrder(customerId,broker, orderId, exchange, transType, script, updatedPrice, newBasketName);
                             onCloseModal();
-                            dispatch(setMessage(response?.data));
+                            dispatch(setMessage(response?.data?.messages));
                             dispatch(setStatus(response?.status !== 200 ? false: true));
+                            dispatch(setNewBasketName(""));
+                            dispatch(setUpdatedPrice(null));
                         }}
-                    >Modify & Send</Button>
-                    <Button color='gray' onClick={onCloseModal}>Cancel</Button>
+                        >Modify & Send</Button>
+                    <Button color='gray' onClick={() => {
+                        onCloseModal();
+                        dispatch(setNewBasketName(""));
+                        dispatch(setUpdatedPrice(null));
+                    }}>Cancel</Button>
                 </div>
             </div>
         </Modal.Body>

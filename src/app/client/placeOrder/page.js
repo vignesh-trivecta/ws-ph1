@@ -83,7 +83,7 @@ const PlaceOrder = () => {
             <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
               <HiCheck className="h-5 w-5" />
             </div>
-            <p>Your order has been placed</p>
+            <p>{data?.message}</p>
           </div>
           <div className="flex justify-between space-x-8 text-xs md:text-sm">
             <div className="flex flex-col space-y-2">

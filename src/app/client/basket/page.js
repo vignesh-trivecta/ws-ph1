@@ -112,6 +112,7 @@ const BasketPage = () => {
     // if-else after customer login over
     if (status === 200) {
       setUrl(data.url);
+      setDisableButton(false);
     } else {
       setDisableButton(true);
       setMessage(data.messages);
