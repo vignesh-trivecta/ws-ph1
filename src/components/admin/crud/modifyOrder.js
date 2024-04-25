@@ -13,6 +13,7 @@ export default function ModifyOrder({onCloseModal}) {
 
     const openModal = useSelector((state) => state.modifyOrder.openModal);
     const orderId = useSelector((state) => state.modifyOrder.orderId);
+    const exchangeOrderId = useSelector((state) => state.modifyOrder.exchangeOrderId);
     const exchange = useSelector((state) => state.modifyOrder.exchange);
     const transType = useSelector((state) => state.modifyOrder.transType); // buy or sell
     const script = useSelector((state) => state.modifyOrder.script);
@@ -92,7 +93,7 @@ export default function ModifyOrder({onCloseModal}) {
                 <div className="flex justify-center gap-4">
                     <Button 
                         onClick={async () => {
-                            const response = await modifyOrder(customerId,broker, orderId, exchange, transType, script, updatedPrice, newBasketName);
+                            const response = await modifyOrder(customerId, broker, orderId, exchangeOrderId, exchange, transType, script, updatedPrice, newBasketName);
                             onCloseModal();
                             dispatch(setMessage(response?.data?.messages));
                             dispatch(setStatus(response?.status !== 200 ? false: true));

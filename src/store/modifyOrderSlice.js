@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     openModal: false,
     orderId: "",
+    exchangeOrderId: "",
     exchange: "",
     script: "",
     quantity: "",
@@ -23,6 +24,9 @@ const modifyOrderSlice = createSlice({
         },
         setOrderId: (state, action) => {
             state.orderId = action.payload;
+        },
+        setExchangeOrderId: (state, action) => {
+            state.exchangeOrderId = action.payload;
         },
         setExchange: (state, action) => {
             state.exchange = action.payload;
@@ -57,6 +61,7 @@ const modifyOrderSlice = createSlice({
 export const { 
     setOpenModal, 
     setOrderId, 
+    setExchangeOrderId,
     setExchange, 
     setScript, 
     setQuantity, 

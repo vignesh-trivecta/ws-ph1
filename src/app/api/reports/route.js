@@ -145,40 +145,37 @@ export const handleLiveReportsFetch = async (
 };
 
 
-export const modifyOrder = async (customerId, broker, orderId, exchange, transType, script, updatedPrice, newBasketName ) => {
+export const modifyOrder = async (customerId, broker, orderId, exchangeOrderId, exchange, transType, script, updatedPrice, newBasketName ) => {
   try {
-    const encryptedData = encrypt(
-      JSON.stringify(
-        {
-          // parameters come here
-          remoteOrderId: orderId,
-          customerId: customerId.split(" ")[0],
-          exchange: exchange,
-          transactionType: transType,
-          script: script,
-          price: parseInt(updatedPrice),
-          basketName: newBasketName,
-        }
-      )
-    );
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: encrypt(JSON.stringify({
+        remoteOrderId: orderId,
+        exchangeOrderId: exchangeOrderId,
+        customerId: customerId.split(" ")[0],
+        exchange: exchange,
+        transactionType: transType,
+        script: script,
+        price: parseFloat(updatedPrice),
+        basketName: newBasketName,
+      }))
+    };
 
     let reqUrl, port;
     broker === "AXIS" ? port = PORT_AXIS : port = PORT_IIFL;
-    broker === "AXIS" ? reqUrl = "view/modify/order" : reqUrl = "/";
+    broker === "AXIS" ? reqUrl = "axis/modify/order" : reqUrl = "iifl/modify/order";
 
-    if(broker == "AXIS") {
-      // AXIS
-      const response = await axios.post(`http://${DOMAIN}:${port}/${reqUrl}`, encryptedData );
-      const status = response.status;
-
-      const jsonData = await response.json();
-      const data = decrypt(jsonData.payload);
-      console.log(status, data);
-      return {status, data};
-    } else {
-      // IIFL
-      return {status: 500, data: "IIFL not configured"};
-    }
+    const response = await fetch(`http://${DOMAIN}:${port}/${reqUrl}`, requestOptions );
+    const status = response.status;
+    console.log(response);
+    
+    const jsonData = await response.json();
+    const data = decrypt(jsonData.payload);
+    console.log(jsonData, data);
+    return {status, data};
 
   } catch (error) {
     errorLogger(error);

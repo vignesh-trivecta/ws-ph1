@@ -8,7 +8,7 @@ import stringFormatter from "@/utils/formatter/stringFormatter";
 import TableShimmer from "@/components/page/layout/tableShimmer";
 import ModifyOrder from "../crud/modifyOrder";
 import { useDispatch } from "react-redux";
-import { setExchange, setLimitPrice, setOpenModal, setOrderId, setOrderType, setPrice, setQuantity, setScript, setTransType } from "@/store/modifyOrderSlice";
+import { setExchange, setExchangeOrderId, setLimitPrice, setOpenModal, setOrderId, setOrderType, setPrice, setQuantity, setScript, setTransType } from "@/store/modifyOrderSlice";
 
 const OrderBookTable = ({ datas, tooltipData, shimmerLoading }) => {
 
@@ -92,6 +92,7 @@ const OrderBookTable = ({ datas, tooltipData, shimmerLoading }) => {
                           ? <button 
                               onClick={() => {
                                 dispatch(setOrderId(data.remoteOrderId));
+                                dispatch(setExchangeOrderId(data.exchangeOrderId));
                                 dispatch(setExchange(data.exchange));
                                 dispatch(setScript(data.scripName));
                                 dispatch(setQuantity(data.quantity));
