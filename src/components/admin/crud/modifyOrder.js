@@ -107,11 +107,11 @@ export default function ModifyOrder({onCloseModal}) {
                     <Button 
                         onClick={async () => {
                             setIsLoading(true);
-                            const response = await modifyOrder(customerId, broker, orderId, exchangeOrderId, exchange, transType, script, updatedPrice, updatedQuantity, newBasketName);
+                            const {status, data} = await modifyOrder(customerId, broker, orderId, exchangeOrderId, exchange, transType, script, updatedPrice, updatedQuantity, newBasketName);
                             onCloseModal();
                             setIsLoading(false);
-                            dispatch(setMessage(response?.data?.messages));
-                            dispatch(setStatus(response?.status !== 200 ? false: true));
+                            dispatch(setMessage(data?.messages));
+                            dispatch(setStatus(status !== 200 ? false: true));
                             dispatch(setNewBasketName(""));
                             dispatch(setUpdatedPrice(null));
                             dispatch(setUpdatedQuantity(null));

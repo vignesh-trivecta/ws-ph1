@@ -10,6 +10,7 @@ const orderDataParser = (response) => {
       });
       mainDatas.push({
         remoteOrderId: data.remoteOrderId,
+        exchangeOrderId: data.exchangeOrderId,
         exchange: data.exchange,
         buyorsell: data.buyorsell,
         exchangeOrderTime: data.exchangeOrderTime,
