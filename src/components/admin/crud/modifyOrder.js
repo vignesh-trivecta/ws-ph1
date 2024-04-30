@@ -1,9 +1,10 @@
 "use client"
 
 import { modifyOrder } from "@/app/api/reports/route";
-import { setNewBasketName, setUpdatedPrice } from "@/store/modifyOrderSlice";
+import { setNewBasketName, setUpdatedPrice, setUpdatedQuantity } from "@/store/modifyOrderSlice";
 import { setMessage, setStatus } from "@/store/reportSlice";
 import { Button, Label, Modal, TextInput, Tooltip } from "flowbite-react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ModifyOrder({onCloseModal}) {
@@ -20,9 +21,13 @@ export default function ModifyOrder({onCloseModal}) {
     const quantity = useSelector((state) => state.modifyOrder.quantity);
     const price = useSelector((state) => state.modifyOrder.price);
     const updatedPrice = useSelector((state) => state.modifyOrder.updatedPrice);
+    const updatedQuantity = useSelector((state) => state.modifyOrder.updatedQuantity);
     const newBasketName = useSelector((state) => state.modifyOrder.newBasketName);
 
     const dispatch = useDispatch();
+
+    // loading state
+    const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
@@ -75,37 +80,54 @@ export default function ModifyOrder({onCloseModal}) {
                             onChange={(e) => {
                                 dispatch(setNewBasketName(e.target.value));
                             }}
-                            className="w-44 h-10 border border-gray-300 rounded-lg focus:outline-blue-700 p-2"
+                            className="w-40 h-10 border text-sm border-gray-300 rounded-lg focus:outline-blue-700 p-2"
                             maxLength={20}
                             autoFocus
                         /> 
                         <p>{''}</p>
                     </div>
                     <div> 
+                        <Label className="font-semibold">Quantity:</Label>
+                        <input 
+                            type="number"
+                            onChange={(e) => {dispatch(setUpdatedQuantity(e.target.value))}}
+                            className="w-20 h-10 border text-sm border-gray-300 rounded-lg focus:outline-none"
+                        />
+                    </div>
+                    <div> 
                         <Label className="font-semibold">New Price:</Label>
                         <input 
                             type="number"
                             onChange={(e) => {dispatch(setUpdatedPrice(e.target.value))}}
-                            className="w-44 h-10 border border-gray-300 rounded-lg focus:outline-none"
+                            className="w-28 h-10 border text-sm border-gray-300 rounded-lg focus:outline-none"
                         />
                     </div>
                 </div>
                 <div className="flex justify-center gap-4">
                     <Button 
                         onClick={async () => {
-                            const response = await modifyOrder(customerId, broker, orderId, exchangeOrderId, exchange, transType, script, updatedPrice, newBasketName);
+                            setIsLoading(true);
+                            const response = await modifyOrder(customerId, broker, orderId, exchangeOrderId, exchange, transType, script, updatedPrice, updatedQuantity, newBasketName);
                             onCloseModal();
+                            setIsLoading(false);
                             dispatch(setMessage(response?.data?.messages));
                             dispatch(setStatus(response?.status !== 200 ? false: true));
                             dispatch(setNewBasketName(""));
                             dispatch(setUpdatedPrice(null));
+                            dispatch(setUpdatedQuantity(null));
                         }}
+                        isProcessing={isLoading}
+                        disabled={isLoading}
                         >Modify & Send</Button>
-                    <Button color='gray' onClick={() => {
-                        onCloseModal();
-                        dispatch(setNewBasketName(""));
-                        dispatch(setUpdatedPrice(null));
-                    }}>Cancel</Button>
+                    <Button color='gray' 
+                        onClick={() => {
+                            onCloseModal();
+                            dispatch(setNewBasketName(""));
+                            dispatch(setUpdatedPrice(null));
+                            dispatch(setUpdatedQuantity(null));
+                        }}
+                        disabled={isLoading}
+                    >Cancel</Button>
                 </div>
             </div>
         </Modal.Body>

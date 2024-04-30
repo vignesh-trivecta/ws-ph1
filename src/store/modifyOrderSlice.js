@@ -12,6 +12,7 @@ const initialState = {
     orderType: "",
     transType: "",
     updatedPrice: 0,
+    updatedQuantity: 0,
     newBasketName: "",
 };
 
@@ -52,6 +53,9 @@ const modifyOrderSlice = createSlice({
         setUpdatedPrice: (state, action) => {
             state.updatedPrice = action.payload;
         },
+        setUpdatedQuantity: (state, action) => {
+            state.updatedQuantity = action.payload;
+        },
         setNewBasketName: (state, action) => {
             state.newBasketName = action.payload;
         }
@@ -70,6 +74,7 @@ export const {
     setOrderType, 
     setTransType, 
     setUpdatedPrice,
+    setUpdatedQuantity,
     setNewBasketName,
 } = modifyOrderSlice.actions;
 
