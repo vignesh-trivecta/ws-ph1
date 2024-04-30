@@ -7,6 +7,7 @@ const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
 const PORT = process.env.NEXT_PUBLIC_CORE_COMP_PORT;
 const PORT_AXIS = process.env.NEXT_PUBLIC_AXIS_CLIENT_LOGIN_PORT;
 const PORT_IIFL = process.env.NEXT_PUBLIC_IIFL_REPORTS_PORT;
+const PORT_IIFL_INTEGRATION = process.env.NEXT_PUBLIC_IIFL_INTEGR_PORT;
 
 // API endpoint to get broker based on customer Id
 export const getBroker = async (customerId) => {
@@ -145,7 +146,7 @@ export const handleLiveReportsFetch = async (
 };
 
 
-export const modifyOrder = async (customerId, broker, orderId, exchangeOrderId, exchange, transType, script, updatedPrice, newBasketName ) => {
+export const modifyOrder = async (customerId, broker, orderId, exchangeOrderId, exchange, transType, script, updatedPrice, updatedQuantity, newBasketName ) => {
   try {
     const requestOptions = {
       method: "POST",
@@ -160,21 +161,20 @@ export const modifyOrder = async (customerId, broker, orderId, exchangeOrderId, 
         transactionType: transType,
         script: script,
         price: parseFloat(updatedPrice),
+        quantity: parseInt(updatedQuantity),
         basketName: newBasketName,
       }))
     };
 
     let reqUrl, port;
-    broker === "AXIS" ? port = PORT_AXIS : port = PORT_IIFL;
+    broker === "AXIS" ? port = PORT_AXIS : port = PORT_IIFL_INTEGRATION;
     broker === "AXIS" ? reqUrl = "axis/modify/order" : reqUrl = "iifl/modify/order";
 
     const response = await fetch(`http://${DOMAIN}:${port}/${reqUrl}`, requestOptions );
     const status = response.status;
-    console.log(response);
     
     const jsonData = await response.json();
     const data = decrypt(jsonData.payload);
-    console.log(jsonData, data);
     return {status, data};
 
   } catch (error) {
