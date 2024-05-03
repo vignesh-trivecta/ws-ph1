@@ -4,6 +4,7 @@ import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import stringFormatter from "@/utils/formatter/stringFormatter";
 import TableShimmer from "@/components/page/layout/tableShimmer";
+import { segreagatorWoComma } from "@/utils/formatter/segregatorWoComma";
 
 const TradeBookTable = ({ datas, tooltipData, shimmerLoading }) => {
 
@@ -83,7 +84,7 @@ const TradeBookTable = ({ datas, tooltipData, shimmerLoading }) => {
                         {data.quantity}
                     </Td>
                     <Td className="text-sm text-right pr-14">
-                        {data.rate}
+                        {segreagatorWoComma(data.rate)}
                     </Td>
                     <Td className="text-sm">
                         {data.orderStatus}

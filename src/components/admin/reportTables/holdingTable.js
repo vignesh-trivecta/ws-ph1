@@ -4,6 +4,7 @@ import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import stringFormatter from "@/utils/formatter/stringFormatter";
 import TableShimmer from "../../page/layout/tableShimmer";
+import { segreagatorWoComma } from "@/utils/formatter/segregatorWoComma";
 
 const HoldingTable = ({ datas, shimmerLoading }) => {
 
@@ -57,7 +58,7 @@ const HoldingTable = ({ datas, shimmerLoading }) => {
                         {data.quantity}
                     </Td>
                     <Td className="text-right pr-20 text-sm">
-                        {data.faceValue}
+                        {segreagatorWoComma(data.faceValue)}
                     </Td>
                     <Td className="text-sm">
                         {stringFormatter(data.asofDate)}

@@ -9,6 +9,7 @@ import TableShimmer from "@/components/page/layout/tableShimmer";
 import ModifyOrder from "../crud/modifyOrder";
 import { useDispatch } from "react-redux";
 import { setExchange, setExchangeOrderId, setLimitPrice, setOpenModal, setOrderId, setOrderType, setPrice, setQuantity, setScript, setTransType } from "@/store/modifyOrderSlice";
+import { segreagatorWoComma } from "@/utils/formatter/segregatorWoComma";
 
 const OrderBookTable = ({ datas, tooltipData, shimmerLoading }) => {
 
@@ -125,7 +126,7 @@ const OrderBookTable = ({ datas, tooltipData, shimmerLoading }) => {
                         {data.quantity}
                     </Td>
                     <Td className="text-sm text-right pr-14">
-                        {data.rate}
+                        {segreagatorWoComma(data.rate)}
                     </Td>
                     <Td className="text-sm">
                         {data.orderStatus}

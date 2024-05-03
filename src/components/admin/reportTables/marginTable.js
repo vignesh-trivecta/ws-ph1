@@ -3,6 +3,7 @@ import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { segregate } from "@/utils/formatter/priceSegregator";
 import TableShimmer from "@/components/page/layout/tableShimmer";
+import { segreagatorWoComma } from "@/utils/formatter/segregatorWoComma";
 
 const MarginTable = ({ datas, shimmerLoading }) => {
 
@@ -44,16 +45,16 @@ const MarginTable = ({ datas, shimmerLoading }) => {
                         {index + 1}
                     </Td>
                     <Td className="p-2 pr-20 text-sm text-right ">
-                        {segregate(data.alb)}
+                        {segreagatorWoComma(data.alb)}
                     </Td>
                     <Td className="pr-4 text-sm text-center">
-                        {segregate(data.ghv)}
+                        {segreagatorWoComma(data.ghv)}
                     </Td>
                     <Td className="text-right pr-14 text-sm">
-                        {segregate(data.grossMargin)}
+                        {segreagatorWoComma(data.grossMargin)}
                     </Td>
                     <Td className="text-right pr-20 text-sm">
-                        {segregate(data.availableMargin)}
+                        {segreagatorWoComma(data.availableMargin)}
                     </Td>
                   </Tr>
                 ))}
