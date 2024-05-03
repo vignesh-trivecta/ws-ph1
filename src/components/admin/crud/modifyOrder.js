@@ -1,10 +1,13 @@
 "use client"
 
-import { modifyOrder } from "@/app/api/reports/route";
+import { getRandomBasketName, modifyOrder } from "@/app/api/reports/route";
 import { setNewBasketName, setUpdatedPrice, setUpdatedQuantity } from "@/store/modifyOrderSlice";
 import { setMessage, setStatus } from "@/store/reportSlice";
+import { segregate } from "@/utils/formatter/priceSegregator";
+import { segreagatorWoComma } from "@/utils/formatter/segregatorWoComma";
+import axios from "axios";
 import { Button, Label, Modal, TextInput, Tooltip } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ModifyOrder({onCloseModal}) {
@@ -29,27 +32,39 @@ export default function ModifyOrder({onCloseModal}) {
     // loading state
     const [isLoading, setIsLoading] = useState(false);
 
+    // fetch random basket name
+    const fetchBasketName = async() => {
+        const {status, data} = await getRandomBasketName();
+        console.log(status, data);
+        // dispatch(setNewBasketName(data))
+    }
+
+    useEffect(() => {
+        
+    }, [orderId])
+
   return (
     <>
       {/* <Button onClick={() => setOpenModal(true)}>Toggle modal</Button> */}
-      <Modal show={openModal} size="md" onClose={onCloseModal} popup>
+      <Modal show={openModal} size="lg" onClose={onCloseModal} popup>
         <Modal.Header />
         <Modal.Body>
             <div className="space-y-4">
                 <p><span className="font-bold underline">Order ID:</span> {orderId}</p>
+                <p><span className="font-bold underline">New basket name:</span> {orderId}</p>
                 <div className="flex gap-4">
                     <div>
                         <Label className="font-semibold">Script:</Label>
                         <Tooltip content={script}>
                             <TextInput 
                                 value={script}
-                                className="font-bold"
+                                className="font-bold w-24"
                                 disabled
                                 />
                         </Tooltip>
                     </div>
                     <div>
-                        <Label className="font-semibold">Exchange:</Label>
+                        <Label className="font-semibold">Exch:</Label>
                         <TextInput 
                             value={exchange}
                             className="font-bold"
@@ -60,21 +75,29 @@ export default function ModifyOrder({onCloseModal}) {
                         <Label className="font-semibold">Buy/ Sell:</Label>
                         <TextInput 
                             value={transType}
-                            className="font-bold"
+                            className="font-bold w-16"
                             disabled
                             />
                     </div>
                     <div>
                         <Label className="font-semibold">Old Price:</Label>
                         <TextInput 
-                            value={price}
+                            value={segreagatorWoComma(price)}
+                            className="font-bold"
+                            disabled
+                        />
+                    </div>
+                    <div>
+                        <Label className="font-semibold">Qty:</Label>
+                        <TextInput 
+                            value={segregate(quantity)}
                             className="font-bold"
                             disabled
                         />
                     </div>
                 </div>
-                <div className="flex">
-                    <div>
+                <div className="flex gap-3">
+                    {/* <div>
                         <Label className="font-semibold">New Basket Name:</Label>
                         <input 
                             onChange={(e) => {
@@ -85,21 +108,21 @@ export default function ModifyOrder({onCloseModal}) {
                             autoFocus
                         /> 
                         <p>{''}</p>
-                    </div>
-                    <div> 
-                        <Label className="font-semibold">Quantity:</Label>
-                        <input 
-                            type="number"
-                            onChange={(e) => {dispatch(setUpdatedQuantity(e.target.value))}}
-                            className="w-20 h-10 border text-sm border-gray-300 rounded-lg focus:outline-none"
-                        />
-                    </div>
-                    <div> 
+                    </div> */}
+                    <div className="flex flex-col"> 
                         <Label className="font-semibold">New Price:</Label>
                         <input 
                             type="number"
                             onChange={(e) => {dispatch(setUpdatedPrice(e.target.value))}}
-                            className="w-28 h-10 border text-sm border-gray-300 rounded-lg focus:outline-none"
+                            className=" h-10 border text-sm border-gray-300 rounded-lg focus:outline-none"
+                        />
+                    </div>
+                    <div className="flex flex-col"> 
+                        <Label className="font-semibold">Quantity:</Label>
+                        <input 
+                            type="number"
+                            onChange={(e) => {dispatch(setUpdatedQuantity(e.target.value))}}
+                            className="w-44 h-10 border text-sm border-gray-300 rounded-lg focus:outline-none"
                         />
                     </div>
                 </div>

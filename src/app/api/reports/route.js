@@ -145,7 +145,7 @@ export const handleLiveReportsFetch = async (
   }
 };
 
-
+// api for modfiy order in the orders page of report section
 export const modifyOrder = async (customerId, broker, orderId, exchangeOrderId, exchange, transType, script, updatedPrice, updatedQuantity, newBasketName ) => {
   try {
     const requestOptions = {
@@ -177,6 +177,22 @@ export const modifyOrder = async (customerId, broker, orderId, exchangeOrderId, 
     const data = decrypt(jsonData.payload);
     return {status, data};
 
+  } catch (error) {
+    errorLogger(error);
+    return {status: 500, data: "Error occured"};
+  }
+}
+
+// api endpoint to get random basket name
+// modify order page - reports section
+export const getRandomBasketName = async () => {
+  try {
+    const response = await axios.get(`http://${DOMAIN}:${PORT}/modify/basket/name`);
+    const status = response.status;
+
+    const jsonData = await response.json();
+    const data = decrypt(jsonData.payload);
+    return {status, data};
   } catch (error) {
     errorLogger(error);
     return {status: 500, data: "Error occured"};
