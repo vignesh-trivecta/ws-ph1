@@ -35,12 +35,11 @@ export default function ModifyOrder({onCloseModal}) {
     // fetch random basket name
     const fetchBasketName = async() => {
         const {status, data} = await getRandomBasketName();
-        console.log(status, data);
-        // dispatch(setNewBasketName(data))
+        dispatch(setNewBasketName(data.basketName));
     }
 
     useEffect(() => {
-        
+        fetchBasketName();
     }, [orderId])
 
   return (

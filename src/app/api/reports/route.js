@@ -190,8 +190,7 @@ export const getRandomBasketName = async () => {
     const response = await axios.get(`http://${DOMAIN}:${PORT}/modify/basket/name`);
     const status = response.status;
 
-    const jsonData = await response.json();
-    const data = decrypt(jsonData.payload);
+    const data = decrypt(response.data.payload);
     return {status, data};
   } catch (error) {
     errorLogger(error);
