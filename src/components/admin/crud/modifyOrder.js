@@ -50,7 +50,7 @@ export default function ModifyOrder({onCloseModal}) {
         <Modal.Body>
             <div className="space-y-4">
                 <p><span className="font-bold underline">Order ID:</span> {orderId}</p>
-                <p><span className="font-bold underline">New basket name:</span> {orderId}</p>
+                <p><span className="font-bold underline">New basket name:</span> {newBasketName}</p>
                 <div className="flex gap-4">
                     <div>
                         <Label className="font-semibold">Script:</Label>
