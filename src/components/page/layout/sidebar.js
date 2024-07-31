@@ -59,28 +59,28 @@ const ExampleSidebar = function () {
         dispatch(setBasketName(''));
         break;
       case 3:
-        router.push('/admin/baskets/create');
+        router.push('/admin/equity/baskets/create');
         dispatch(setBasketState(false));
         setIsLinkDisabled(false);
         dispatch(setBasketAmount(''));
         dispatch(setBasketName(''));
         break;
       case 4:
-        router.push('/admin/baskets/view');
+        router.push('/admin/equity/baskets/view');
         dispatch(setBasketState(false));
         setIsLinkDisabled(false);
         dispatch(setBasketAmount(''));
         dispatch(setBasketName(''));
         break;
       case 5:
-        router.push('/admin/baskets/customerMapping');
+        router.push('/admin/equity/baskets/customerMapping');
         dispatch(setBasketState(false));
         setIsLinkDisabled(false);
         dispatch(setBasketAmount(''));
         dispatch(setBasketName(''));
         break;
       case 6:
-        router.push('/admin/baskets/basketMapping');
+        router.push('/admin/equity/baskets/basketMapping');
         dispatch(setBasketState(false));
         setIsLinkDisabled(false);
         dispatch(setBasketAmount(''));
@@ -108,7 +108,7 @@ const ExampleSidebar = function () {
         dispatch(setBasketName(''));
         break;
       case 10:
-        router.push('/admin/kyc');
+        router.push('/admin/others/kyc');
         dispatch(setBasketState(false));
         setIsLinkDisabled(false);
         dispatch(setBasketAmount(''));
@@ -247,67 +247,74 @@ const ExampleSidebar = function () {
                   }
                 </Sidebar.Item>
                 <Sidebar.Collapse
-                  icon={HiShoppingBag}
-                  label="Baskets"
+                  icon={AiFillSetting}
+                  label="Equity"
                 >
-                      <Sidebar.Item 
-                          icon={HiPencilAlt}
-                          className={
-                            "/admin/baskets/create" === pathname
-                              ? "bg-gray-200 dark:bg-gray-700 "
-                              : ""
-                          }
-                      >
-                        <Link href="/admin/baskets/create">
-                            Create                        
-                        </Link>
-                      </Sidebar.Item>
-                      <Sidebar.Item 
-                          icon={AiOutlineFolderView}
-                          className={
-                            ("/admin/baskets/view" === pathname
-                            || pathname.startsWith("/admin/baskets/view")
-                            )
-                              ? "bg-gray-200 dark:bg-gray-700"
-                              : ""
-                          }
-                      >
-                        {isLinkDisabled 
-                          ? ( <button onClick={() => {setOpen(true); setTab(4);}}>View</button> ) 
-                          : ( <Link href="/admin/baskets/view">View</Link> )
+                  <Sidebar.Collapse
+                    icon={HiShoppingBag}
+                    label="Baskets"
+                    className="ml-3"
+                    >
+                    <Sidebar.Item 
+                        icon={HiPencilAlt}
+                        className={
+                          "/admin/equity/baskets/create" === pathname
+                            ? "bg-gray-200 dark:bg-gray-700 "
+                            : ""
                         }
-                      </Sidebar.Item>
-                </Sidebar.Collapse>
-                <Sidebar.Collapse
-                  icon={LiaSitemapSolid}
-                  label="Map"
-                >
-                      <Sidebar.Item 
-                          icon={AiOutlineUserAdd}
-                          className={
-                            "/admin/baskets/customerMapping" === pathname
-                              ? "bg-gray-200 dark:bg-gray-700"
-                              : ""
-                          }
-                      >
-                        {isLinkDisabled 
-                          ? ( <button onClick={() => {setOpen(true); setTab(5);}}>Customers</button> ) 
-                          : ( <Link href="/admin/baskets/customerMapping">Customers</Link> )
+                        >
+                      <Link href="/admin/equity/baskets/create">
+                          Create                        
+                      </Link>
+                    </Sidebar.Item>
+                    <Sidebar.Item 
+                        icon={AiOutlineFolderView}
+                        className={
+                          ("/admin/equity/baskets/view" === pathname
+                          || pathname.startsWith("/admin/equity/baskets/view")
+                          )
+                            ? "bg-gray-200 dark:bg-gray-700"
+                            : ""
+                            }
+                    >
+                      {isLinkDisabled 
+                        ? ( <button onClick={() => {setOpen(true); setTab(4);}}>View</button> ) 
+                        : ( <Link href="/admin/equity/baskets/view">View</Link> )
+                      }
+                    </Sidebar.Item>
+                  </Sidebar.Collapse>
+                  <Sidebar.Collapse
+                    icon={LiaSitemapSolid}
+                    label="Map"
+                    className="ml-3"
+                    >
+                    <Sidebar.Item 
+                        icon={AiOutlineUserAdd}
+                        className={
+                          "/admin/equity/baskets/customerMapping" === pathname
+                            ? "bg-gray-200 dark:bg-gray-700"
+                            : ""
                         }
-                      </Sidebar.Item>
-                      <Sidebar.Item 
-                          icon={SlBasket}
-                          className={
-                            "/admin/baskets/basketMapping" === pathname
-                              ? "bg-gray-200 dark:bg-gray-700"
-                              : ""
-                          }
-                      >
-                        {isLinkDisabled 
-                          ? ( <button onClick={() => {setOpen(true); setTab(6);}}>Baskets</button> ) 
-                          : ( <Link href="/admin/baskets/basketMapping">Baskets</Link> )
+                    >
+                      {isLinkDisabled 
+                        ? ( <button onClick={() => {setOpen(true); setTab(5);}}>Customers</button> ) 
+                        : ( <Link href="/admin/equity/baskets/customerMapping">Customers</Link> )
+                      }
+                    </Sidebar.Item>
+                    <Sidebar.Item 
+                        icon={SlBasket}
+                        className={
+                          "/admin/equity/baskets/basketMapping" === pathname
+                            ? "bg-gray-200 dark:bg-gray-700"
+                            : ""
                         }
-                      </Sidebar.Item>
+                    >
+                      {isLinkDisabled 
+                        ? ( <button onClick={() => {setOpen(true); setTab(6);}}>Baskets</button> ) 
+                        : ( <Link href="/admin/equity/baskets/basketMapping">Baskets</Link> )
+                      }
+                    </Sidebar.Item>
+                  </Sidebar.Collapse>
                 </Sidebar.Collapse>
                 <Sidebar.Item
                   icon={CgFileDocument}
@@ -351,21 +358,21 @@ const ExampleSidebar = function () {
                     : ( <Link href="/admin/bod-eod">BOD/ EOD Ops</Link> )
                   }
                 </Sidebar.Item>
-                <Sidebar.Item
-                  icon={AiFillSetting}
-                  className={
-                    "/admin/kyc" === pathname ? "bg-gray-200 dark:bg-gray-700" : ""
-                  }
-                >
-                  {isLinkDisabled 
-                    ? ( <button onClick={() => {setOpen(true); setTab(10);}}>KYC</button> ) 
-                    : ( <Link href="/admin/kyc">KYC</Link> )
-                  }
-                </Sidebar.Item>
                 <Sidebar.Collapse
                   icon={CiMoneyCheck1}
-                  label="InvestWell"
+                  label="Others"
                 >
+                  <Sidebar.Item
+                    icon={AiFillSetting}
+                    className={
+                      "/admin/others/kyc" === pathname ? "bg-gray-200 dark:bg-gray-700" : ""
+                    }
+                  >
+                    {isLinkDisabled 
+                      ? ( <button onClick={() => {setOpen(true); setTab(10);}}>KYC</button> ) 
+                      : ( <Link href="/admin/others/kyc">KYC</Link> )
+                    }
+                  </Sidebar.Item>
                   <Sidebar.Item 
                       icon={AiOutlineUserAdd}
                       className={

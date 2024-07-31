@@ -3,14 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navbar, Dropdown } from "flowbite-react";
 import Image from "next/image";
 import logo from "@/../../public/logo1.png";
-import {
-  setAdminLoginStatus,
-  setTimeFormat,
-} from "@/store/userSlice";
+import { setAdminLoginStatus, setTimeFormat } from "@/store/userSlice";
 import { useRouter } from "next/navigation";
 import { GiHamburgerMenu } from "react-icons/gi";
 import ExampleSidebar from "./sidebar";
 import { setAdminLogin } from "@/store/reportSlice";
+import { IconContext } from "react-icons";
+import { HiOutlineViewList } from "react-icons/hi";
+import { setSideBarFull, setThemeColor } from "@/store/eventSlice";
+
 
 const DashNavbar = function () {
   // redux
@@ -18,6 +19,8 @@ const DashNavbar = function () {
   const username = useSelector((state) => state.user.username);
   const email = useSelector((state) => state.user.email);
   const timeFormat = useSelector((state) => state.user.timeFormat);
+  const sidebarFull = useSelector((state) => state.event.sidebarFull);
+  const themeColor = useSelector((state) => state.event.themeColor);
 
   const router = useRouter();
 
@@ -35,8 +38,8 @@ const DashNavbar = function () {
   const formatTime = () => {
     const options = {
       hour12: !timeZone,
-      hour: 'numeric',
-      minute: 'numeric',
+      hour: "numeric",
+      minute: "numeric",
     };
     return time.toLocaleTimeString(undefined, options);
   };
@@ -47,8 +50,8 @@ const DashNavbar = function () {
   }, []);
 
   return (
-    <Navbar fluid className="border-b-2">
-      <div className="w-full p-3 lg:px-5 lg:pl-3">
+    <Navbar fluid className="border-b">
+      <div className="w-full px-3 lg:px-5">
         <div className="flex items-center justify-between">
           {/* WealthSpring logo */}
           <div className="flex items-center">
@@ -56,19 +59,20 @@ const DashNavbar = function () {
               <Image
                 alt="wealth-spring"
                 src={logo}
-                className="mr-3 h-10 w-32 sm:h-10 sm:w-40"
+                className="mr-3 h-12 w-32 sm:h-10 sm:w-40"
               />
             </Navbar.Brand>
+            {/* <IconContext.Provider value={{ color: "black", style: {width: '30px', height: '30px'} }}>
+              <button onClick={() => {dispatch(setSideBarFull(!sidebarFull))}}>
+                <HiOutlineViewList />
+              </button>
+            </IconContext.Provider> */}
           </div>
 
           <div className="flex items-center gap-3">
-            <div>
-              <div>
-                Date: {new Date().toUTCString().slice(0, 16)}
-              </div>
-              <div>
-                Time: {formatTime()}
-              </div>
+            <div className="text-sm">
+              <div>Date: {new Date().toUTCString().slice(0, 16)}</div>
+              <div>Time: {formatTime()}</div>
             </div>
             <div className=" md:hidden hover:cursor-pointer">
               {/* Hamburger menu and user profile */}
@@ -138,11 +142,38 @@ const DashNavbar = function () {
                       defaultValue={24}
                       defaultChecked={timeZone === true}
                       onChange={() => {
-                      setTimeZone(!timeZone);
+                        setTimeZone(!timeZone);
                         dispatch(setTimeFormat(24));
                       }}
                     />
                     <label htmlFor="24hr">24 Hr</label>
+                  </div>
+                </div>
+                <div className="mt-2">
+                  <p className=" underline">Choose theme:</p>
+                  <div className="space-x-2 flex items-center mt-1">
+                    <input 
+                      type="radio" 
+                      name ="theme-orange" 
+                      id="theme-orange" 
+                      checked={themeColor === 'theme-orange'}
+                      value={'theme-orange'}
+                      onChange={() => {
+                        dispatch(setThemeColor('theme-orange'))
+                      }} 
+                    />
+                    <label htmlFor="theme-orange">Orange</label>
+                    <input 
+                      type="radio"
+                      name="theme-blue"
+                      id="theme-blue"
+                      checked={themeColor === 'theme-blue'}
+                      value={'theme-blue'}
+                      onChange={() => {
+                        dispatch(setThemeColor('theme-blue'))
+                      }}  
+                    />
+                    <label htmlFor="theme-blue">Blue</label>
                   </div>
                 </div>
               </Dropdown.Header>
