@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setBasketData } from '@/store/clientBasketSlice';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Logo from "@/../public/logo1.png";
+import Logo from "@/../../public/logo1.png";
 import { Button } from 'flowbite-react';
 import { generateOtp, validateOtp } from '@/app/api/client/route';
 

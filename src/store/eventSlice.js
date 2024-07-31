@@ -4,6 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     tab: 1,
     basketState: false,
+    sidebarFull: true,
+    themeColor: 'theme-orange',
 }
 
 // creating new slice
@@ -17,12 +19,15 @@ const evnetSlice = createSlice({
         setBasketState: (state, action) => {
             state.basketState = action.payload;
         },
-        setCheckedStatus: (state, action) => {
-            
+        setSideBarFull: (state, action) => {
+            state.sidebarFull = action.payload;
+        },
+        setThemeColor: (state, action) => {
+            state.themeColor = action.payload;
         }
     }
 });
 
-export const { setTab, setBasketState } = evnetSlice.actions;
+export const { setTab, setBasketState, setSideBarFull, setThemeColor } = evnetSlice.actions;
 
 export default evnetSlice.reducer;

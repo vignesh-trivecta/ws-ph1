@@ -11,6 +11,10 @@ import addRecordSlice from "./addRecordSlice";
 import updateRecordSlice from "./updateRecordSlice";
 import reportSlice from "./reportSlice";
 import modifyOrderSlice from "./modifyOrderSlice";
+import mfBasketCreateSlice from "./mfBasketCreateSlice";
+import newMFPurchaseSlice from "./newMFPurchaseSlice";
+import switchOrderSlice from "./switchOrderSlice";
+import redeemOrderSlice from "./redeemOrderSlice";
 
 // combinig all the slices to a reducer
 const reducers = combineReducers({
@@ -22,12 +26,16 @@ const reducers = combineReducers({
     client: clientBasketSlice,
     report: reportSlice,
     modifyOrder: modifyOrderSlice,
+    mfBasketCreate: mfBasketCreateSlice,
+    newMFPurchase: newMFPurchaseSlice,
+    switchOrder: switchOrderSlice,
+    redeemOrder: redeemOrderSlice,
 });
 
 // configuration for persiting data
 const persistConfig = {
     key: 'root',
-    whitelist: ['data', 'event', 'user', 'client'],
+    whitelist: ['data', 'user', 'client'],
     storage,
 }
 

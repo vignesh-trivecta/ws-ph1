@@ -96,7 +96,7 @@ const Customers = () => {
       <div className="flex mt-8">
         <div className={"overflow-y-scroll border h-[calc(100vh-250px)]"}>
           <table className="table-fixed w-full ">
-            <thead className="border-b sticky top-0 bg-gray-50">
+            <thead className="border-b top-0 bg-gray-50">
               <tr>
                 <th className="text-left font-medium text-sm p-2 w-10 md:w-12 lg:w-16 truncate">
                   S.No

@@ -15,6 +15,7 @@ import SubmitBasket from "@/components/admin/crud/submitBasket";
 import { segregate } from "@/utils/formatter/priceSegregator";
 import BasketCategory from "@/components/admin/basketCategory";
 import { segreagatorWoComma } from "@/utils/formatter/segregatorWoComma";
+import Breadcrumbs from "@/components/page/breadcrumb";
 
 const CreateBasket = () => {
   // basket status messages
@@ -30,6 +31,7 @@ const CreateBasket = () => {
 
   // getting the url path
   const pathname = usePathname();
+  const ids = [{'View Baskets': '/admin/equity/basket'}, {'Create new basket': ''}]
 
   // redux
   const dispatch = useDispatch();
@@ -149,7 +151,9 @@ const CreateBasket = () => {
 
   return (
     <div className="container mx-auto mt-4" style={{ width: "95%" }}>
-      <h3 className="mb-2 font-bold">Create new basket</h3>
+      <div className="mb-2">
+        <Breadcrumbs len={ids.length} ids={ids}  />
+      </div>
 
       {/* Investment details row */}
       <div className="flex justify-between">

@@ -2,7 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import DashNavbar from "./navbar";
-import ExampleSidebar from "./sidebar";
+import SidebarFull from "./sideBarFull/SideBarFull";
+import { useSelector } from "react-redux";
+import SideBarIcons from "./sideBarIcons/SideBarIcons";
+import SideBarMain from "./SideBarMain";
 
 const DashLayout = ({ children }) => {
   // local state variable
@@ -27,12 +30,13 @@ const DashLayout = ({ children }) => {
   }, []);
 
   let width = windowWidth > 768;
+  const sidebarFull = useSelector((state) => state.event.sidebarFull);
 
   return (
     <div className="">
       <DashNavbar />
       <div className="flex items-start">
-        {width && <ExampleSidebar />}
+        {width && <SideBarMain />}
         <MainContent>{children}</MainContent>
       </div>
     </div>
@@ -40,11 +44,7 @@ const DashLayout = ({ children }) => {
 };
 
 const MainContent = function ({ children }) {
-  return (
-    <main className=" h-[calc(100vh-100px)] w-screen">
-      {children}
-    </main>
-  );
+  return <main className=" h-[calc(100vh-100px)] w-screen">{children}</main>;
 };
 
 export default DashLayout;

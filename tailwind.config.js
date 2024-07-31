@@ -8,6 +8,14 @@ module.exports = {
     "./node_modules/flowbite-react/**/*.js",
     "./node_modules/react-tailwindcss-select/dist/index.esm.js"
   ],
+  safelist: [
+    'hover:text-theme-orange',
+    'hover:text-theme-blue',
+    'bg-theme-orange',
+    'bg-theme-blue',
+    'text-theme-orange',
+    'text-theme-blue',
+  ],
   theme: {
     extend: {
       backgroundImage: {
@@ -15,9 +23,14 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        'theme-orange': '#F37440',
+        'theme-blue': '#1B1A47'
+      },
     },
   },
   plugins: [
     require('flowbite/plugin'),
+    require('tailwind-scrollbar')({ nocompatible: true }),
   ],
 }
